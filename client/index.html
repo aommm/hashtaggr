@@ -1,10 +1,44 @@
+<!doctype html>
 <html>
 <head>
-	<title>Socket.io testing</title>
-	<script type="text/javascript" language="JavaScript" src="scripts/socket.io.min.js"></script>
-	<script type="text/javascript" language="JavaScript" src="index.js"></script>
+  <title>Socket.io testing</title>
+  <script src="scripts/underscore-min.js"></script>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/backbone.js"></script>
+  <script src="index.js"></script>
 </head>
 <body>
-	Yello world! <a href="#" onClick="javascript:getConnectedCount();">Ask server for number of connected clients</a>.
+
+<div id="spotifyapp"></div>
+
+
+<!-- Templates -->
+<script type="text/template" id="home-template">
+  <div id="spotifyapp">
+
+  <header>
+    <h1>Todos</h1>
+    <input id="new-track-title" type="text" value="Title">
+    <input id="new-track-artist" type="text" value="Artist">
+    <input id="new-track-save" type="submit" value="Save">
+  </header>
+
+  <section id="main">
+    <ul id="track-list"></ul>
+  </section>
+
+  <footer>
+    <div id="track-count"></div>
+  </footer>
+
+  </div>
+</script>
+
+
+<script type="text/template" id="track-template">
+  <%= artist %> - <%= title %>
+</script>
+
+
 </body>
 </html>
