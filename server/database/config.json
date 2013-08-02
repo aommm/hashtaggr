@@ -1,0 +1,6 @@
+{
+	"host": "localhost",
+  "user": "foo",
+  "password": "bar",
+  "database": "spotifyapp"
+}

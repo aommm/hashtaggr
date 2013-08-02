@@ -1,33 +1,29 @@
-var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , _ = require('underscore');
+var express = require('express')
+  , http = require('http')
+  , path = require('path')
+  , app = express()
+  , _ = require('underscore')
+  , db = require('./database')
+  ;
 
-app.listen(80);
+app.configure(function(){
+  app.set('port', process.env.PORT || 3000);
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, 'public')));
+});
 
-var handler = function(req, res) {};
+app.configure('development', function(){
+  app.use(express.errorHandler());
+});
 
-var clients = [];
+app.get('/', function() {
+  console.log('Hej');
+});
 
-io.sockets.on('connection', function (socket) {
-
-  // Super-secure handshaking algorithm
-  socket.emit('welcome', "How ya doing? Welcome to the neighbourhood!");
-  socket.on('thanks', function (data) {
-    clients.push(socket);
-    console.log("Client connected. Clients online:", clients.length);
-  });
-  socket.on('disconnect', function() {
-    var index = clients.indexOf(socket);
-    if (index>=0) {
-      clients.splice(index, 1);
-      console.log("Client disconnected. Clients online:", clients.length);
-    }
-  });
-
-
-  // Actions!
-  socket.on('get connected count', function() {
-    socket.emit('connected count', clients.length);
-  });
-
+http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
 });
