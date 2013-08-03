@@ -45,11 +45,13 @@ $(document).ready(function() {
   // Models
   var CurrentTrackModel = Backbone.Model.extend({
 
-    // Has properties:
-    // uri
-    // artist
-    // title
-    // [tag_1, tag_2, tag_3]
+    defaults: {
+      uri: "",
+      artist: "",
+      title: "",
+      tags: [{name: "hej!"},
+             {name: "då!"}]
+    },
 
     initialize: function() {
       ;
@@ -65,8 +67,11 @@ $(document).ready(function() {
 
   var AllTagsModel = Backbone.Model.extend({
 
-    // Has properties:
-    // [list of tags]
+    defaults: {
+      tags: [{name: "hej"},
+             {name:"då"}]
+    },
+
     initialize: function() {
       ;
     },
@@ -79,13 +84,21 @@ $(document).ready(function() {
 
   var TracksForTagModel = Backbone.Model.extend({
 
-    // Has properties:
-    // tag
-    // [list of tracks]
+    defaults: {
+      tag: "hej",
+      tracks: [{uri: "spotify:track:1OmlDOLZP88XgpanFtPCfQ",
+                url: "http://open.spotify.com/track/1DiP1KYlzeNysRN5JHLbfx", // TODO remove
+                artist: "Vikingarna",
+                title: "Hej mitt vinterland"},
+               {uri: "spotify:track:1DiP1KYlzeNysRN5JHLbfx",
+                url: "http://open.spotify.com/track/1OmlDOLZP88XgpanFtPCfQ", // TODO remove
+                artist: "Carpenters",
+                title: "(They Long To Be) Close To You"}]
+    },
+
     initialize: function() {
       ;
     },
-
 
     update: function(tag) {
       if (tag) {
@@ -127,7 +140,7 @@ $(document).ready(function() {
 
     initialize: function() {
       console.log("initializing HomeView.");
-      this.model.on('change', this.update);
+      this.model.on('change', this.update, this);
     },
 
     render: function() {
@@ -151,7 +164,7 @@ $(document).ready(function() {
 
     initialize: function() {
       console.log("initializing AllTagsView.");
-      this.model.on('change', this.render);
+      this.model.on('change', this.render, this);
     },
 
     render: function() {

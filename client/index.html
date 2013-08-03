@@ -27,8 +27,15 @@
 
 <!-- Templates -->
 <script type="text/template" id="home-template">
-  <p>Now playing: <span id="track-artist"></span> - <span id="track-title"></span></p>
-  <p><span id="hashtag-1"><%= hashtag_1 %></span> <span id="hashtag-2"><%= hashtag_2 %></span> <span id="hashtag-3"><%= hashtag_3 %></span></p>
+  <p>Now playing: <span id="track-artist"><%= artist %></span> - <span id="track-title"><%= title %></span></p>
+  <p>
+
+  <ul id="tags-for-track-list">
+    <% for(var tag in tags) { %>
+      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
+    <% } %>
+   </ul>
+
   <p><a href="#" id="refresh">(refresh)</a></p>
 </script>
 
@@ -36,20 +43,23 @@
 <script type="text/template" id="tracks-for-tag-template">
   <p>Showing tracks for tag <span id="tag-name"><%= tag %></span></p>
 
-  <ul id="track-list"></ul>
+  <ul id="track-list">
+    <% for(var track in tracks) { %>
+      <li><a href="<%= tracks[track].url %>"><%= tracks[track].artist %> - <%= tracks[track].title %></a></li>
+    <% } %>
+  </ul>
 </script>
-
-<script type="text/template" id="track-template">
-  <%= artist %> - <%= title %>
-</script>
-
 
 
 <!-- All tags list -->
 <script type="text/template" id="all-tags-template">
   <p>Showing all tags</p>
 
-  <ul id="tag-list"></ul>
+  <ul id="tag-list">
+    <% for(var tag in tags) { %>
+      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
+    <% } %>
+  </ul>
 </script>
 
 <script type="text/template" id="tag-template">
