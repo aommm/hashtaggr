@@ -1,136 +1,190 @@
 $(document).ready(function() {
 
-  // Define routes for this application
-  var Router = Backbone.Router.extend({
-    mainView: null,
+  // Routes
+
+  var Controller = Backbone.Router.extend({
 
     initialize: function() {
+
+      this.currentTrackModel = new CurrentTrackModel;
+      this.allTagsModel = new AllTagsModel;
+      this.tracksForTagModel = new TracksForTagModel;
+
       this.mainView = new MainView;
+
+      this.homeView = new HomeView({model: this.currentTrackModel, controller: this});
+      this.allTagsView = new AllTagsView({model: this.allTagsModel, controller: this});
+      this.tracksForTagView = new TracksForTagView({model: this.tracksForTagModel, controller: this});
+
+      // var spotify = {};
+      // this.listenTo(spotify, 'trackChanged', this.trackChanged);
+      // this.listenTo(this.currentTrackModel, 'change', )
     },
 
     routes: {
-      "": "home",
-      "tags": "all_tags",
-      "tag/:tag": "songs_for_tag"
+      "tags": "allTags",
+      "tag/:tag": "tracksForTag",
+      "*path": "home"
     },
 
     home: function() {
-      this.mainView.showHome();
+      this.mainView.show(this.homeView);
     },
 
-    all_tags: function() {
-      this.mainView.showAllTags();
+    allTags: function() {
+      this.mainView.show(this.allTagsView);
     },
 
-    songs_for_tag: function(tag) {
-      this.mainView.showSongsForTag(tag);
+    tracksForTag: function(tag) {
+      this.tracksForTagModel.update(tag);
+      this.mainView.show(this.tracksForTagView);
     }
+
   });
 
-  // Define models and collections
-  var Track = Backbone.Model.extend({
-    initialize: function(values) {
-      console.log("initializing track:",values.artist,"-",values.title);
-    }
-  });
+  // Models
+  var CurrentTrackModel = Backbone.Model.extend({
 
-  var Tracks = Backbone.Collection.extend({
-    model: Track
-  });
-
-  // Define UI views
-  var TrackView = Backbone.View.extend({
-    tagName: "li",
-    template: _.template($("#track-template").html()),
-
-    render: function() {
-      var json = this.model.toJSON();
-      var html = this.template(json);
-      this.$el.html(html);
-      return this;
-    }
-  })
-
-
-  // Define pages
-  var MainView = Backbone.View.extend({
-    el: $("#spotifyapp"),
-    currentView: null,
+    // Has properties:
+    // uri
+    // artist
+    // title
+    // [tag_1, tag_2, tag_3]
 
     initialize: function() {
-      this.home = new HomeView;
+      ;
     },
 
-    showHome: function() {
-      console.log("show home!");
-      this.currentView = this.home;
-      this.$el.html(this.home.render().el);
+    // Is called whenever the currently playing track changes
+    trackChanged: function(uri, artist, title) {
+      // Replace instance variables,
+      // fetch new tags from server
+    }
+
+  });
+
+  var AllTagsModel = Backbone.Model.extend({
+
+    // Has properties:
+    // [list of tags]
+    initialize: function() {
+      ;
     },
-    showAllTags: function() {
-      console.log("show all tags!");
-      // this.currentView = this.home;
-      // this.$el.html(this.home.render().el);
-    },
-    showSongsForTag: function() {
-      console.log("show songs for tag!");
-      // this.currentView = this.home;
-      // this.$el.html(this.home.render().el);
+
+    update: function() {
+      // re-fetches tags from server
+    }
+
+  });
+
+  var TracksForTagModel = Backbone.Model.extend({
+
+    // Has properties:
+    // tag
+    // [list of tracks]
+    initialize: function() {
+      ;
     },
 
 
+    update: function(tag) {
+      if (tag) {
+        console.log("saving tag");
+        this.set({tag: tag});
+      }
+      // Replace instance variable,
+      // fetch new tracks from server
+    }
 
   });
 
 
-  // TODO refactor this
+
+  // Views
+
+  var MainView = Backbone.View.extend({
+    el: $("#main"),
+
+    initialize: function() {
+      console.log("initializing MainView");
+    },
+
+    render: function() {
+      this.$el.html(this.currentView.render().el);
+    },
+
+    show: function(view) {
+      this.currentView = view;
+      this.render();
+    }
+
+  });
+
 
   var HomeView = Backbone.View.extend({
     tagName: 'home',
     template: _.template($("#home-template").html()),
 
     initialize: function() {
-      console.log("initializing HomeView");
+      console.log("initializing HomeView.");
+      this.model.on('change', this.update);
     },
 
     render: function() {
-      this.$el.html(this.template()); // pass data to template later, specifying what to show?
-
-      /*
-      this.new_track_title = this.$("#new-track-title");
-      this.new_track_artist = this.$("#new-track-artist");
-      this.new_track_save = this.$("#new-track-save");
-      this.track_list = this.$("#track-list");
-      */
-
-      this.tracks = new Tracks;
-
-      this.listenTo(this.tracks, 'add', this.addTrack);
-
+      var data = this.model.toJSON();
+      console.log("re-rendering home view. New data:",data);
+      this.$el.html(this.template(data));
       return this;
     },
 
-    // TODO refactor event handling
-    events: {
-      "click #new-track-save": "addTrackClick"
-    },
-    addTrackClick: function() {
-      var title = this.new_track_title.val()
-        , artist = this.new_track_artist.val();
+    update: function() {
+      this.render();
 
-      var track = new Track({title: title, artist: artist});
-      this.tracks.add(track);
-    },
-    addTrack: function(track) {
-      var trackView = new TrackView({model: track});
-      this.track_list.append(trackView.render().el);
-    },
-    removeTrack: function(track) {
-      // todo implement
+      return this;
     }
+
   });
 
-  var router = new Router;
+  var AllTagsView = Backbone.View.extend({
+    tagName: 'all-tags',
+    template: _.template($("#all-tags-template").html()),
 
-  Backbone.history.start({pushState: true});
+    initialize: function() {
+      console.log("initializing AllTagsView.");
+      this.model.on('change', this.render);
+    },
+
+    render: function() {
+      var data = this.model.toJSON();
+      console.log("re-rendering all tags view. New data:",data);
+      this.$el.html(this.template(data));
+      return this;
+    }
+
+  });
+
+  var TracksForTagView = Backbone.View.extend({
+    tagName: 'tracks-for-tag',
+    template: _.template($("#tracks-for-tag-template").html()),
+
+    initialize: function() {
+      console.log("initializing TracksForTagView.");
+      this.model.on('change', this.render, this);
+    },
+
+    render: function() {
+      var data = this.model.toJSON();
+      console.log("re-rendering tracks for tag view. New data:",data);
+      this.$el.html(this.template(data));
+      return this;
+    }
+
+  });
+
+
+  // Spin everything up!
+  var controller = new Controller;
+
+  Backbone.history.start({pushState: false, root: "../index.html"});
 
 });

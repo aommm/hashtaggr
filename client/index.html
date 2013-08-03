@@ -9,35 +9,55 @@
 </head>
 <body>
 
-<div id="spotifyapp"></div>
+<header>
+  <h1>Hashtag mania</h1>
+</header>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="index.html#tags">All tags</a>
+  <a href="index.html#tag/money">Tracks for tag "money"</a>
+</nav>
+
+<section id="main"></div>
+
+<footer>
+  <div id="footer"></div>
+</footer>
 
 <!-- Templates -->
 <script type="text/template" id="home-template">
-  <div id="spotifyapp">
-
-  <header>
-    <h1>Todos</h1>
-    <input id="new-track-title" type="text" value="Title">
-    <input id="new-track-artist" type="text" value="Artist">
-    <input id="new-track-save" type="submit" value="Save">
-  </header>
-
-  <section id="main">
-    <ul id="track-list"></ul>
-  </section>
-
-  <footer>
-    <div id="track-count"></div>
-  </footer>
-
-  </div>
+  <p>Now playing: <span id="track-artist"></span> - <span id="track-title"></span></p>
+  <p><span id="hashtag-1"><%= hashtag_1 %></span> <span id="hashtag-2"><%= hashtag_2 %></span> <span id="hashtag-3"><%= hashtag_3 %></span></p>
+  <p><a href="#" id="refresh">(refresh)</a></p>
 </script>
 
+<!-- Tracks for tag -->
+<script type="text/template" id="tracks-for-tag-template">
+  <p>Showing tracks for tag <span id="tag-name"><%= tag %></span></p>
+
+  <ul id="track-list"></ul>
+</script>
 
 <script type="text/template" id="track-template">
   <%= artist %> - <%= title %>
 </script>
+
+
+
+<!-- All tags list -->
+<script type="text/template" id="all-tags-template">
+  <p>Showing all tags</p>
+
+  <ul id="tag-list"></ul>
+</script>
+
+<script type="text/template" id="tag-template">
+  <a href="<%= url %>"><%= name %></a>
+</script>
+
+
+
 
 
 </body>
