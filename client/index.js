@@ -135,7 +135,8 @@ $(document).ready(function() {
 
 
   var HomeView = Backbone.View.extend({
-    tagName: 'home',
+    tagName: 'section',
+    id: 'home',
     template: _.template($("#home-template").html()),
 
     initialize: function() {
@@ -145,15 +146,16 @@ $(document).ready(function() {
 
     render: function() {
       var data = this.model.toJSON();
-      console.log("re-rendering home view. New data:",data);
       this.$el.html(this.template(data));
       return this;
     },
 
-    update: function() {
-      this.render();
+    events: {
+      "click #refresh": "refresh"
+    },
 
-      return this;
+    refresh: function() {
+      console.log("refresh");
     }
 
   });
