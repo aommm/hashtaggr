@@ -4,7 +4,7 @@ var express = require('express')
   , app = express()
   , _ = require('underscore')
   , db = require('./database')
-  , lyricsRequester = require('./lyricsRequester')
+  , lyricsRequester = require('./lyrics')
   ;
 
 app.configure(function(){
@@ -28,9 +28,12 @@ app.get('/', function() {
 app.get('/song/:artist/:songname', function(req, res) {
   var artist = req.params.artist
     , songname = req.params.songname
+    , lyrics
     ;
 
-  lyricsRequester.getSongLyrics(artist, songname);
+  lyricsRequester.getHashTags(artist, songname, function(err, tags) {
+    console.log('Tags', tags);
+  });
 
 });
 

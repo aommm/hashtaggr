@@ -1,38 +1,34 @@
 var http = require('http')
-  , xmlStream = require('xml-stream')
+  , XmlStream = require('xml-stream')
   , chartlyricsApi = "http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?"
   ;
 
-
-
 // we want to send artist and song name to our function which requests
-function getSongLyrics(artist, songName) {
+function getSongLyrics(artist, songName, cb) {
   var reqString = chartlyricsApi + ['artist=', artist, '&song=', songName].join('');
 
   // request the lyrics for the song
-  http.get(reqString).on('response', parseLyricsForSong);
+  http.get(reqString).on('response', function(res) {
+    // parse the lyrics from the response
+    parseLyricsForSong(res, function(lyrics) {
+      cb(null, lyrics);
+    });
+  });
 
   // if error what to do?
 
 }
 exports.getSongLyrics = getSongLyrics;
 
-function parseLyricsForSong(res) {
-  var resString = '';
+function parseLyricsForSong(res, cb) {
+  console.log('Parsing lyrics');
 
-  res.on('data', function(chunk) {
-    resString += chunk;
+  res.setEncoding('utf8');
+  var xml = new XmlStream(res);
+
+  xml.on('endElement: Lyric', function(lyrics) {
+    cb( lyrics.$text );
   });
-
-  res.on('end', function() {
-  // send lyrics to xmlParser which returns string
-  // console.log('Res String', resString);
-
-  });
-}
-
-function extractLyricsFromXml(xmlString) {
-
 }
 
 
