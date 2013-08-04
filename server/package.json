@@ -6,6 +6,7 @@
   "dependencies": {
     "underscore": "*",
     "express": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "xml-stream": "git://github.com/jesusabdullah/xml-stream.git"
   }
 }

@@ -4,6 +4,7 @@ var express = require('express')
   , app = express()
   , _ = require('underscore')
   , db = require('./database')
+  , lyricsRequester = require('./lyricsRequester')
   ;
 
 app.configure(function(){
@@ -22,6 +23,15 @@ app.configure('development', function(){
 
 app.get('/', function() {
   console.log('Hej');
+});
+
+app.get('/song/:artist/:songname', function(req, res) {
+  var artist = req.params.artist
+    , songname = req.params.songname
+    ;
+
+  lyricsRequester.getSongLyrics(artist, songname);
+
 });
 
 http.createServer(app).listen(app.get('port'), function(){
