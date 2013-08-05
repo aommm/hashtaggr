@@ -1,5 +1,7 @@
 $(function() {
 
+  var ROOT_URL = "http://localhost:3000";
+
   // Routes
 
   var Controller = Backbone.Router.extend({
@@ -46,11 +48,16 @@ $(function() {
   var CurrentTrackModel = Backbone.Model.extend({
 
     defaults: {
-      uri: "",
-      artist: "",
-      title: "",
+      uri: "a",
+      artist: "b",
+      title: "c",
       tags: [{name: "hej!"},
              {name: "då!"}]
+    },
+
+    url: function() {
+      var url = "http://localhost:3000/song/"+this.get('uri')+"/"+this.get('artist')+"/"+this.get('title')+"/";
+      return url;
     },
 
     initialize: function() {
@@ -59,8 +66,15 @@ $(function() {
 
     // Is called whenever the currently playing track changes
     trackChanged: function(uri, artist, title) {
-      // Replace instance variables,
-      // fetch new tags from server
+      if (uri && artist && title) {
+        // Replace instance variables,
+        this.set('uri', uri);
+        this.set('artist', artist);
+        this.set('title', title);
+        // fetch new tags from server
+        this.fetch();
+      }
+      
     }
 
   });
@@ -156,6 +170,7 @@ $(function() {
 
     refresh: function() {
       console.log("refresh");
+      this.model.trackChanged("abc", "Bob Hund", "Moln etc");
     }
 
   });
