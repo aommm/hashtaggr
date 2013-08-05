@@ -1,10 +1,74 @@
+<!doctype html>
 <html>
 <head>
-	<title>Socket.io testing</title>
-	<script type="text/javascript" language="JavaScript" src="scripts/socket.io.min.js"></script>
-	<script type="text/javascript" language="JavaScript" src="index.js"></script>
+  <title>Backbone.js testing</title>
+  <script src="scripts/underscore-min.js"></script>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/backbone.js"></script>
+  <script src="index.js"></script>
 </head>
 <body>
-	Yello world! <a href="#" onClick="javascript:getConnectedCount();">Ask server for number of connected clients</a>.
+
+<header>
+  <h1>Hashtag mania</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="index.html#tags">All tags</a>
+  <a href="index.html#tag/money">Tracks for tag "money"</a>
+</nav>
+
+<section id="main"></div>
+
+<footer>
+  <div id="footer"></div>
+</footer>
+
+<!-- Templates -->
+<script type="text/template" id="home-template">
+  <p>Now playing: <span id="track-artist"><%= artist %></span> - <span id="track-title"><%= title %></span></p>
+  <p>
+
+  <ul id="tags-for-track-list">
+    <% for(var tag in tags) { %>
+      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
+    <% } %>
+   </ul>
+
+  <p><a href="#" id="refresh">(refresh)</a></p>
+</script>
+
+<!-- Tracks for tag -->
+<script type="text/template" id="tracks-for-tag-template">
+  <p>Showing tracks for tag <span id="tag-name"><%= tag %></span></p>
+
+  <ul id="track-list">
+    <% for(var track in tracks) { %>
+      <li><a href="<%= tracks[track].url %>"><%= tracks[track].artist %> - <%= tracks[track].title %></a></li>
+    <% } %>
+  </ul>
+</script>
+
+
+<!-- All tags list -->
+<script type="text/template" id="all-tags-template">
+  <p>Showing all tags</p>
+
+  <ul id="tag-list">
+    <% for(var tag in tags) { %>
+      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
+    <% } %>
+  </ul>
+</script>
+
+<script type="text/template" id="tag-template">
+  <a href="<%= url %>"><%= name %></a>
+</script>
+
+
+
+
+
 </body>
 </html>
