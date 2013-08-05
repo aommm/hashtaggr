@@ -1,4 +1,8 @@
-
+/**
+ * Counts word frequncy from string passed in and returns the result
+ * @param  {String} string The text we want to get word frequency from
+ * @return {Array}        Sorted (desc) array containing objects like { word: "problems", frequency: 99 }
+ */
 function getWordFrequency(string) {
   var words = string.split(' ')
     wordFrequency = countWords(words)
