@@ -14,7 +14,8 @@ function getHashTags(artist, songname, cb) {
         },
         function(lyrics, callback) {
           // use the result from the requester to build a frequency tree
-          frequencyBuilder.getWordFrequency(lyrics, callback);
+          var wordFrequency = frequencyBuilder.getWordFrequency(lyrics);
+          callback(null, wordFrequency);
         }
       ],
 

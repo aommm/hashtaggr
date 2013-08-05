@@ -1,7 +1,16 @@
 
-function getWordFrequency(string, cb) {
+function getWordFrequency(string) {
   var words = string.split(' ')
-    , nrWords = words.length
+    wordFrequency = countWords(words)
+    ;
+
+  return sortWordFrequency(wordFrequency);
+}
+
+exports.getWordFrequency = getWordFrequency;
+
+function countWords(words) {
+  var nrWords = words.length
     , wordFrequency = {}
     , word
     , i
@@ -17,8 +26,26 @@ function getWordFrequency(string, cb) {
     }
   }
 
-
-  cb(null, wordFrequency);
+  return wordFrequency;
 }
 
-exports.getWordFrequency = getWordFrequency;
+function sortWordFrequency(wordFrequency) {
+  var wordFrequencyArr = []
+    , word
+    ;
+
+  for (word in wordFrequency) {
+    if ( !wordFrequency.hasOwnProperty(word) ) continue;
+
+    wordFrequencyArr.push({
+      word: word,
+      frequency: wordFrequency[word]
+    });
+  }
+
+  wordFrequencyArr.sort(function(firstWord, secondWord) {
+    return secondWord.frequency - firstWord.frequency;
+  });
+
+  return wordFrequencyArr;
+}
