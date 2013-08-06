@@ -59,7 +59,7 @@ app.get('/song/:artist/:title', function(req, res) {
 });
 
 app.get('/blabla', function(req, res) {
-  db.tracks.get({ artist: 'gyllene tider', title: 'sommartider' }, function(err, track) {
+  db.tracks.get({ artist: 'jay-z', title: '99 problems' }, function(err, track) {
     console.log('The track', track);
   });
 });
