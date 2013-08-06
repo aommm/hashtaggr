@@ -1,11 +1,43 @@
-#current-track {
-  list-style-type: none;
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  background: #ECEBE8;
 }
-#current-track ul {
+
+#hashtaggr-app {
+  margin: 10px 40px 10px 40px;
+  padding:10px 40px 10px 40px;
+  background: #fff;
+
+  -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+}
+
+
+
+header {
+  border-bottom: 1px dashed #aaa;
+}
+
+h1 {
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+
+#current-track h2 {
+  font-style: italic;
+}
+
+#tags-for-track {
+  padding-left: 1em;
   list-style-type: none;
   /*display: inline;*/
   /*display: none;*/
 }
-#current-track ul li {
+#tags-for-track li {
   display: inline;
+  font-size: 2.1em;
+  margin-right:1em;
 }
