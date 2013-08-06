@@ -9,7 +9,7 @@ var ignoreWordsArr = require('./ignoreWords')
 function getWordFrequency(string) {
 
   var words = string.split(' ')
-    wordFrequency = countWords(words)
+    , wordFrequency = countWords(words)
     ;
 
   return sortWordFrequency(wordFrequency);
