@@ -1,54 +1,43 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="utf-8" />
   <title>Backbone.js testing</title>
+
+  <!-- Templates -->
+  <script type="text/template" id="track-template">
+    <div> <%= artist %> - <%= title %> </div>
+  </script>
+
   <script src="js/lib/underscore-min.js"></script>
   <script src="js/lib/jquery.min.js"></script>
   <script src="js/lib/backbone.js"></script>
+  <script src="js/lib/backbone.localStorage.js"></script>
   <script src="js/models/track.js"></script>
   <script src="js/collections/tracks.js"></script>
-  <script src="js/views/app.js"></script>
   <script src="js/views/tracks.js"></script>
+  <script src="js/views/app.js"></script>
   <script src="js/index.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>Hashtag mania</h1>
-</header>
-<nav>
-  <a href="index.html">Home</a>
-  <a href="index.html#tags">All tags</a>
-  <a href="index.html#tag/money">Tracks for tag "money"</a>
-</nav>
-<section id="main">
+<section id="hashtaggr-app">
+  <header>
+    <h1>Hashtag mania</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#tags">All tags</a>
+      <a href="index.html#tag/money">Tracks for tag "money"</a>
+    </nav>
+  </header>
+  <section id="main">
+    <ul id="track-list">
+    </ul>
+  </section>
+  <footer>
+    <div id="footer"></div>
+  </footer>
 </section>
-<footer>
-  <div id="footer"></div>
-</footer>
-
-<!-- Templates -->
-<script type="text/template" id="home-template">
-  <p>Now playing: <span id="track-artist"><%= artist %></span> - <span id="track-title"><%= title %></span></p>
-  <p>
-
-  <ul id="tags-for-track-list">
-    <% for(var tag in tags) { %>
-      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
-    <% } %>
-   </ul>
-
-  <p><a href="#" id="refresh">(change track)</a></p>
-</script>
-
-<script type="text/template" id="track-template">
-  <h2> <%= artist %> - <%= track %> </h2>
-  <ul id="tag-list">
-    <% for(var tag in tags) { %>
-      <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
-    <% } %>
-  </ul>
-</script>
 
 </body>
 </html>

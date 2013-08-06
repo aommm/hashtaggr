@@ -1,6 +1,6 @@
-$(function() {
+var app = app || {};
 
-  var app = app || {};
+$(function() {
 
   new app.AppView();
 

@@ -15,7 +15,11 @@
     },
 
     render: function() {
-      this.$el.html( this.template( this.model.toJSON() ) );
+      var modelJson = this.model.toJSON();
+      console.log('Model json', modelJson);
+      var temp = this.template( modelJson );
+      console.log('Temp', temp);
+      this.$el.html( temp  );
       return this;
     }
 

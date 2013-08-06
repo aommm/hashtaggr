@@ -23,6 +23,7 @@
     // appending its element to the `<ul>`.
     addOne: function( track ) {
       var view = new app.TrackView({ model: track });
+      // debugger;
       $('#track-list').append( view.render().el );
     }
 
