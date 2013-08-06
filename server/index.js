@@ -21,17 +21,42 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', function() {
-  console.log('Hej');
+
+app.get('/tracks/:id?', function(req, res) {
+
 });
 
-app.get('/song/:artist/:songname', function(req, res) {
-  var artist = req.params.artist
-    , songname = req.params.songname
-    , lyrics
+app.post('/tracks', function(req, res) {
+  var artist = req.body.artist
+    , title = req.body.title
     ;
 
-  lyricsRequester.getHashTags(artist, songname, function(err, tags) {
+  var track = {
+    id: 1,
+    artist: artist,
+    title: title,
+    tags: ['money', 'power']
+  };
+
+  res.json(track);
+});
+
+app.put('/tracks/:id?', function(req, res) {
+
+});
+
+app.del('/tracks/:id', function(req, res) {
+
+});
+
+app.get('/song/:artist/:title', function(req, res) {
+  var artist = req.params.artist
+    , songname = req.params.title
+    , track = { artist: artist, title: songname }
+    ;
+
+  console.log('Curl!!');
+  lyricsRequester.getHashTags(track, function(err, tags) {
     console.log('Tags', tags);
   });
 

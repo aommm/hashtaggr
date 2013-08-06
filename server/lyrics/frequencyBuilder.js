@@ -23,6 +23,8 @@ function countWords(words) {
   for (i = 0; i < nrWords; i++) {
     word = words[i];
 
+    if ( ignoreWord(word) ) continue;
+
     if ( wordFrequency[word] ) {
       wordFrequency[word]++;
     } else {
@@ -52,4 +54,18 @@ function sortWordFrequency(wordFrequency) {
   });
 
   return wordFrequencyArr;
+}
+
+function ignoreWord(word) {
+  var ignoreWords = {}
+
+  var ignoreArr = [ 'the', 'i', 'i\'m', 'you', 'but', 'for', 'to', 'a', 'ain\'t', 'is', 'of' ];
+  ;
+
+  ignoreArr.forEach( function(ignore) {
+    ignoreWords[ignore] = true;
+  });
+
+  return !!ignoreWords[ word.toLowerCase() ];
+
 }

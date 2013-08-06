@@ -1,16 +1,19 @@
 var async = require('async')
-  , requester = require('./requester')
+  , requester = require('./apiRequester')
   , frequencyBuilder = require('./frequencyBuilder')
   ;
 
-function getHashTags(artist, songname, cb) {
+function getHashTags(track, cb) {
+
   // should contain connection to db, which checks if song exists
-  if ( !songExists(artist, songname) ) {
+  if ( !trackExists(track) ) {
     // if the song not exists we should request it and build tree
     async.waterfall([
+
         function(callback) {
-          requester.getSongLyrics(artist, songname, callback);
+          requester.getTrackLyrics(track, callback);
         },
+
         function(lyrics, callback) {
           var wordFrequency = frequencyBuilder.getWordFrequency(lyrics);
           callback(null, wordFrequency);
@@ -19,7 +22,6 @@ function getHashTags(artist, songname, cb) {
 
       function(err, result) {
         console.log('Word freq', result);
-
         // then add to the database
 
         // and return the hashtags
@@ -28,9 +30,8 @@ function getHashTags(artist, songname, cb) {
   }
 
 }
-
 exports.getHashTags = getHashTags;
 
-function songExists(artist, songname) {
+function trackExists(track) {
   return false;
 }
