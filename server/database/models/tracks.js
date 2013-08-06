@@ -32,9 +32,10 @@ module.exports = function(connection) {
   }
 
   function getExisting(track, cb) {
-    connection.query('SELECT * FROM Tracks WHERE artist="' + track.artist +
+    connection.query('SELECT * FROM tracks WHERE artist="' + track.artist +
         '" AND title="' + track.title + '"', function(err, rows) {
 
+          console.log(err);
       if ( !rows.length ) {
         cb('No track found');
       } else {
@@ -45,7 +46,7 @@ module.exports = function(connection) {
   }
 
   function getTagsForTrack(id, cb) {
-    var selectTagsSql = 'SELECT * FROM Tag WHERE track_id=' + id;
+    var selectTagsSql = 'SELECT * FROM tag WHERE track_id=' + id;
 
     connection.query(selectTagsSql, function(err, rows) {
       console.log('Arguments', arguments);
@@ -80,7 +81,7 @@ module.exports = function(connection) {
   }
 
   function createTrack(track, cb) {
-    var insertSql = 'INSERT into Tracks (artist, title) VALUES("' +
+    var insertSql = 'INSERT into tracks (artist, title) VALUES("' +
           track.artist + '", "' + track.title + '")';
 
     connection.query(insertSql, function(err, result) {
@@ -107,7 +108,7 @@ module.exports = function(connection) {
       var insertString = '';
 
       tags.forEach( function(tag) {
-        var insertSql = 'INSERT into Tag (name, track_id) VALUES("' +
+        var insertSql = 'INSERT into tag (name, track_id) VALUES("' +
           tag + '", ' + trackId + '); ';
 
         insertString += insertSql;

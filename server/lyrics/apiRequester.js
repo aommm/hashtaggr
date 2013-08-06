@@ -1,6 +1,5 @@
 var http = require('http')
   , querystring = require('querystring')
-  , XmlStream = require('xml-stream')
   , api = "http://api.musixmatch.com/ws/1.1/"
   , apiKey = "b7ea5bcdda7ff8b2dc27a21b8bc3551b"
   ;
