@@ -5,6 +5,10 @@
   <script src="js/lib/underscore-min.js"></script>
   <script src="js/lib/jquery.min.js"></script>
   <script src="js/lib/backbone.js"></script>
+  <script src="js/models/track.js"></script>
+  <script src="js/collections/tracks.js"></script>
+  <script src="js/views/app.js"></script>
+  <script src="js/views/tracks.js"></script>
   <script src="js/index.js"></script>
 </head>
 <body>
@@ -12,15 +16,13 @@
 <header>
   <h1>Hashtag mania</h1>
 </header>
-
 <nav>
   <a href="index.html">Home</a>
   <a href="index.html#tags">All tags</a>
   <a href="index.html#tag/money">Tracks for tag "money"</a>
 </nav>
-
-<section id="main"></div>
-
+<section id="main">
+</section>
 <footer>
   <div id="footer"></div>
 </footer>
@@ -39,36 +41,14 @@
   <p><a href="#" id="refresh">(change track)</a></p>
 </script>
 
-<!-- Tracks for tag -->
-<script type="text/template" id="tracks-for-tag-template">
-  <p>Showing tracks for tag <span id="tag-name"><%= tag %></span></p>
-
-  <ul id="track-list">
-    <% for(var track in tracks) { %>
-      <li><a href="<%= tracks[track].url %>"><%= tracks[track].artist %> - <%= tracks[track].title %></a></li>
-    <% } %>
-  </ul>
-</script>
-
-
-<!-- All tags list -->
-<script type="text/template" id="all-tags-template">
-  <p>Showing all tags</p>
-
+<script type="text/template" id="track-template">
+  <h2> <%= artist %> - <%= track %> </h2>
   <ul id="tag-list">
     <% for(var tag in tags) { %>
       <li><a href="index.html#tag/<%= tags[tag].name %>"><%= tags[tag].name %></a></li>
     <% } %>
   </ul>
 </script>
-
-<script type="text/template" id="tag-template">
-  <a href="<%= url %>"><%= name %></a>
-</script>
-
-
-
-
 
 </body>
 </html>
