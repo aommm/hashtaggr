@@ -21,7 +21,7 @@
     "views": "1.10.0"
   },
   "RequiredPermissions": [
-    "https://api.mygreatapp.com"
+    "http://localhost:3000"
   ],
   "SupportedDeviceClasses": [
     "Web",

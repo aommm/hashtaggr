@@ -10,7 +10,9 @@ require(['$api/models'], function(models) {
       app.Tracks.create({artist: spotifyTrack.artists[0].name.decodeForHtml(),
                          title: spotifyTrack.name.decodeForHtml(),
                          tags: ["tag1", "tag2", "tag3"]});
-    }
+
+      console.log('Changing track');
+    };
 
     // Process currently playing track on startup (if any)
     models.player.load('track').done(function(track) {
