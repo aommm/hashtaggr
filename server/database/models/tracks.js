@@ -34,7 +34,7 @@ module.exports = function(connection) {
   function getExisting(track, cb) {
     connection.query('SELECT * FROM tracks WHERE artist="' + track.artist +
         '" AND title="' + track.title + '"', function(err, rows) {
-
+      console.log('Err', err);
       if ( !rows.length ) {
         cb('No track found');
       } else {
