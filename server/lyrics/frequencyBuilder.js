@@ -1,9 +1,15 @@
+var ignoreWordsArr = require('./ignoreWords')
+  ;
+
 /**
  * Counts word frequncy from string passed in and returns the result
  * @param  {String} string The text we want to get word frequency from
  * @return {Array}        Sorted (desc) array containing objects like { word: "problems", frequency: 99 }
  */
 function getWordFrequency(string) {
+
+  console.log('Ignore words', ignoreWordsArr);
+
   var words = string.split(' ')
     wordFrequency = countWords(words)
     ;
@@ -59,10 +65,7 @@ function sortWordFrequency(wordFrequency) {
 function ignoreWord(word) {
   var ignoreWords = {}
 
-  var ignoreArr = [ 'the', 'i', 'i\'m', 'you', 'but', 'for', 'to', 'a', 'ain\'t', 'is', 'of' ];
-  ;
-
-  ignoreArr.forEach( function(ignore) {
+  ignoreWordsArr.forEach( function(ignore) {
     ignoreWords[ignore] = true;
   });
 
