@@ -35,7 +35,6 @@ module.exports = function(connection) {
     connection.query('SELECT * FROM tracks WHERE artist="' + track.artist +
         '" AND title="' + track.title + '"', function(err, rows) {
 
-          console.log(err);
       if ( !rows.length ) {
         cb('No track found');
       } else {
@@ -46,7 +45,7 @@ module.exports = function(connection) {
   }
 
   function getTagsForTrack(id, cb) {
-    var selectTagsSql = 'SELECT * FROM tag WHERE track_id=' + id;
+    var selectTagsSql = 'SELECT * FROM tags WHERE track_id=' + id;
 
     connection.query(selectTagsSql, function(err, rows) {
       console.log('Arguments', arguments);
@@ -60,7 +59,7 @@ module.exports = function(connection) {
   }
 
   function insertTrack(track, cb) {
-    console.log('Inser track', track);
+    console.log('Insert track', track);
 
     async.waterfall([
       function(callback) {
@@ -102,13 +101,13 @@ module.exports = function(connection) {
       , hashtags
       ;
 
-    lyricsRequester.getHashTags(track, function(err, tags) {
+    lyricsRequester.generateHashTags(track, function(err, tags) {
       track.tags = tags;
 
       var insertString = '';
 
       tags.forEach( function(tag) {
-        var insertSql = 'INSERT into tag (name, track_id) VALUES("' +
+        var insertSql = 'INSERT into tags (name, track_id) VALUES("' +
           tag + '", ' + trackId + '); ';
 
         insertString += insertSql;

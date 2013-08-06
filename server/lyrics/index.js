@@ -4,7 +4,7 @@ var async = require('async')
   , frequencyBuilder = require('./frequencyBuilder')
   ;
 
-function getHashTags(track, cb) {
+function generateHashTags(track, cb) {
 
   async.waterfall([
 
@@ -25,7 +25,6 @@ function getHashTags(track, cb) {
         cb(null, []);
       } else {
         firstTags = frequentWords.slice(0, 3);
-        console.log('First tags', firstTags);
 
         // get the three first tags and return them
         cb(null, _.pluck(firstTags, 'word'));
@@ -34,4 +33,4 @@ function getHashTags(track, cb) {
   );
 
 }
-exports.getHashTags = getHashTags;
+exports.generateHashTags = generateHashTags;
