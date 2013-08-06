@@ -8,8 +8,7 @@ require(['$api/models'], function(models) {
     var newTrack = function() {
       var spotifyTrack = models.player.track;
       app.Tracks.create({artist: spotifyTrack.artists[0].name.decodeForHtml(),
-                         title: spotifyTrack.name.decodeForHtml(),
-                         tags: ["tag1", "tag2", "tag3"]});
+                         title: spotifyTrack.name.decodeForHtml()});
 
       console.log('Changing track');
     };
