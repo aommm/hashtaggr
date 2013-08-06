@@ -23,12 +23,12 @@ function generateHashTags(track, cb) {
       ;
       if (err) {
         cb(null, []);
-      } else {
-        firstTags = frequentWords.slice(0, 3);
-
-        // get the three first tags and return them
-        cb(null, _.pluck(firstTags, 'word'));
+        return;
       }
+
+      // get the three first tags and return them
+      firstTags = frequentWords.slice(0, 3);
+      cb(null, _.pluck(firstTags, 'word'));
     }
   );
 

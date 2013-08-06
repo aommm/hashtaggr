@@ -22,11 +22,11 @@ module.exports = function(connection) {
       if (err) {
         // track doesnt exist, insert it
         insertTrack(track, cb);
-      } else {
-        track.tags = tags;
-        cb(null, track);
+        return;
       }
 
+      track.tags = tags;
+      cb(null, track);
     });
 
   }
@@ -37,9 +37,10 @@ module.exports = function(connection) {
       console.log('Err', err);
       if ( !rows.length ) {
         cb('No track found');
-      } else {
-        cb(null, rows[0].id);
+        return;
       }
+
+      cb(null, rows[0].id);
 
     });
   }
@@ -49,11 +50,13 @@ module.exports = function(connection) {
 
     connection.query(selectTagsSql, function(err, rows) {
       console.log('Arguments', arguments);
+
       if ( !rows.length ) {
         cb(null, []);
-      } else {
-        cb( null, _.pluck(rows, 'name') );
+        return;
       }
+
+      cb( null, _.pluck(rows, 'name') );
 
     });
   }
@@ -73,9 +76,9 @@ module.exports = function(connection) {
     ], function(err, track) {
         if (err) {
           cb('Fail');
-        } else {
-          cb(null, track);
+          return;
         }
+        cb(null, track);
       });
   }
 
@@ -89,10 +92,10 @@ module.exports = function(connection) {
 
       if (err) {
         cb('Failed insert');
-      } else {
-        insertId = result.insertId;
-        cb(null, insertId);
       }
+
+      insertId = result.insertId;
+      cb(null, insertId);
     });
   }
 
@@ -116,9 +119,10 @@ module.exports = function(connection) {
       connection.query(insertString, function(err, result) {
         if (err) {
           cb('fail');
-        } else {
-          cb(null, track);
+          return;
         }
+
+        cb(null, track);
       });
     });
   }
