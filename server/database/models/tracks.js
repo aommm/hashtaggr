@@ -35,7 +35,6 @@ module.exports = function(connection) {
     connection.query('SELECT * FROM tracks WHERE artist="' + track.artist +
         '" AND title="' + track.title + '"', function(err, rows) {
 
-          console.log(err);
       if ( !rows.length ) {
         cb('No track found');
       } else {
