@@ -17,11 +17,14 @@
     render: function() {
     },
 
-    // Add a single todo item to the list by creating a view for it, and
-    // appending its element to the `<ul>`.
+    // Set a track to be the currently playing track.
+    // Also, add it to the <ul> list keeping track of previously played tracks.
     addOne: function( track ) {
-      var view = new app.TrackView({ model: track });
-      $('#track-list').append( view.render().el );
+      var listItemView = new app.TrackView({ model: track });
+      var currentTrackView = new app.CurrentTrackView({ model: track });
+
+      $('#track-list').append( listItemView.render().el );
+      $('#current-track').html( currentTrackView.render().el );
     }
 
   });

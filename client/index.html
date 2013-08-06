@@ -13,16 +13,26 @@
       </ul>
     </div>
   </script>
+  <script type="text/template" id="current-track-template">
+      <h2>Now playing: <%= artist %> - <%= title %> </h2>
+      <ul>
+        <% _.each(tags, function(tag) { %> <li>#<%= tag %></li> <% }); %>
+      </ul>
+  </script>
 
   <script src="js/lib/underscore-min.js"></script>
   <script src="js/lib/jquery.min.js"></script>
   <script src="js/lib/backbone.js"></script>
   <script src="js/lib/backbone.localStorage.js"></script>
+
   <script src="js/models/track.js"></script>
   <script src="js/collections/tracks.js"></script>
   <script src="js/views/tracks.js"></script>
+  <script src="js/views/currentTrack.js"></script>
   <script src="js/views/app.js"></script>
   <script src="js/index.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 
@@ -36,8 +46,8 @@
     </nav>
   </header>
   <section id="main">
-    <ul id="track-list">
-    </ul>
+    <div id="current-track"></div>
+    <ul id="track-list"></ul>
   </section>
   <footer>
     <div id="footer"></div>
