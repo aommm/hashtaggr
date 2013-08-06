@@ -1,6 +1,6 @@
 {
   "AppDescription": {
-    "en": "Generate hashtags for the tracks you're listening to"
+    "en": "Describe the undescribable - with #hashtaggr"
   },
   "AppIcon": {
     "18x18": "images/icons/icon-18x18.png",
@@ -29,6 +29,5 @@
   ],
   "SupportedLanguages": [
     "en"
-  ],
-  "VendorIdentifier": "com.myorganization"
+  ]
 }

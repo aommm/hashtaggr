@@ -2,6 +2,6 @@
   "host": "localhost",
   "user": "foo",
   "password": "bar",
-  "database": "spotifyapp",
+  "database": "hashtaggr",
   "multipleStatements": true
 }
