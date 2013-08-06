@@ -9,14 +9,14 @@
     <div>
       <h3> <%= artist %> - <%= title %> </h3>
       <ul>
-        <% _.each(tags, function(tag) { %> <li>#<%= tag %></li> <% }); %>
+        <% _.each(tags, function(tag) { %> <li class="tag">#<%= tag %></li> <% }); %>
       </ul>
     </div>
   </script>
   <script type="text/template" id="current-track-template">
       <h3><%= artist %> - <%= title %> </h3>
       <ul id="tags-for-track">
-        <% _.each(tags, function(tag) { %> <li>#<%= tag %></li> <% }); %>
+        <% _.each(tags, function(tag) { %> <li class="tag">#<%= tag %></li> <% }); %>
       </ul>
   </script>
 

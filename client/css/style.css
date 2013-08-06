@@ -41,3 +41,13 @@ h1 {
   font-size: 2.1em;
   margin-right:1em;
 }
+
+.tag {
+  padding: 5px;
+  border-radius: 20%;
+}
+
+.tag:hover {
+  background: #eee;
+  cursor: pointer;
+}
