@@ -1,6 +1,8 @@
-spotifyapp
+#hashtaggr
 ==========
-A spotify app built on Socket.io and something else.
+Describe the undescribable.
+
+A spotify app which generates hashtags based on the lyrics of what you're listening to at the moment, for those moments when gramatically sound sentences aren't enough.
 
 Server
 ------
@@ -8,5 +10,6 @@ In the /server directory: install dependencies using npm install, and start the 
 
 Client
 ------
-The client is not actually a real spotify app yet, but it's getting there!
-For now, visit client/index.html in <a href="http://getfirefox.com">your browser of choice</a> to experience awesome server interaction.
+Get a spotify developer account.
+Create a symlink to the client directory of the project in "~/Spotify" (Linux) or "My Documents/Spotify" (Windows).
+Restart spotify, and enter "spotify:app:hashtaggr" into the search bar and press enter.
