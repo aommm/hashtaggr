@@ -31,17 +31,12 @@ app.post('/tracks', function(req, res) {
     , title = req.body.title
     ;
 
-  var track = {
-    id: 1,
-    artist: artist,
-    title: title,
-    tags: ['money', 'power']
-  };
-
-  res.json(track);
+  db.tracks.get({ artist: artist, title: title }, function(err, track) {
+    res.json(track);
+  });
 });
 
-app.put('/tracks/:id?', function(req, res) {
+app.put('/tracks/:id', function(req, res) {
 
 });
 
@@ -60,6 +55,12 @@ app.get('/song/:artist/:title', function(req, res) {
     console.log('Tags', tags);
   });
 
+});
+
+app.get('/blabla', function(req, res) {
+  db.tracks.get({ artist: 'gyllene tider', title: 'sommartider' }, function(err, track) {
+    console.log('The track', track);
+  });
 });
 
 http.createServer(app).listen(app.get('port'), function(){

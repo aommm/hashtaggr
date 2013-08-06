@@ -1,6 +1,7 @@
 {
-	"host": "localhost",
+  "host": "localhost",
   "user": "foo",
   "password": "bar",
-  "database": "spotifyapp"
+  "database": "spotifyapp",
+  "multipleStatements": true
 }

@@ -1,37 +1,37 @@
 var async = require('async')
+  , _ = require('underscore')
   , requester = require('./apiRequester')
   , frequencyBuilder = require('./frequencyBuilder')
   ;
 
 function getHashTags(track, cb) {
 
-  // should contain connection to db, which checks if song exists
-  if ( !trackExists(track) ) {
-    // if the song not exists we should request it and build tree
-    async.waterfall([
+  async.waterfall([
 
-        function(callback) {
-          requester.getTrackLyrics(track, callback);
-        },
+      function(callback) {
+        requester.getTrackLyrics(track, callback);
+      },
 
-        function(lyrics, callback) {
-          var wordFrequency = frequencyBuilder.getWordFrequency(lyrics);
-          callback(null, wordFrequency);
-        }
-      ],
-
-      function(err, result) {
-        console.log('Word freq', result);
-        // then add to the database
-
-        // and return the hashtags
+      function(lyrics, callback) {
+        var wordFrequency = frequencyBuilder.getWordFrequency(lyrics);
+        callback(null, wordFrequency);
       }
-    );
-  }
+    ],
+
+    function(err, frequentWords) {
+      var firstTags
+      ;
+      if (err) {
+        cb(null, []);
+      } else {
+        firstTags = frequentWords.slice(0, 3);
+        console.log('First tags', firstTags);
+
+        // get the three first tags and return them
+        cb(null, _.pluck(firstTags, 'word'));
+      }
+    }
+  );
 
 }
 exports.getHashTags = getHashTags;
-
-function trackExists(track) {
-  return false;
-}
