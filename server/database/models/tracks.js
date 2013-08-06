@@ -51,7 +51,7 @@ module.exports = function(connection) {
     connection.query(selectTagsSql, function(err, rows) {
       console.log('Arguments', arguments);
 
-      if ( !rows.length ) {
+      if ( err || !rows.length ) {
         cb(null, []);
         return;
       }
@@ -118,17 +118,13 @@ module.exports = function(connection) {
 
       connection.query(insertString, function(err, result) {
         if (err) {
-          cb('fail');
+          cb('Failed to insert tags');
           return;
         }
 
         cb(null, track);
       });
     });
-  }
-
-  function getAll() {
-    // return all tracks
   }
 
   return {

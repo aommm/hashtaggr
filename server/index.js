@@ -29,9 +29,10 @@ app.get('/tracks/:id?', function(req, res) {
 app.post('/tracks', function(req, res) {
   var artist = req.body.artist
     , title = req.body.title
+    , track = { artist: artist, title: title }
     ;
 
-  db.tracks.get({ artist: artist, title: title }, function(err, track) {
+  db.tracks.get(track, function(err, track) {
     console.log('Track', track);
     res.json(track);
   });
