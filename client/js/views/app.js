@@ -5,8 +5,6 @@
 
     el: '#hashtaggr-app',
 
-    // New
-    // Delegated events for creating new items, and clearing completed ones.
     events: {
     },
 
@@ -23,7 +21,6 @@
     // appending its element to the `<ul>`.
     addOne: function( track ) {
       var view = new app.TrackView({ model: track });
-      // debugger;
       $('#track-list').append( view.render().el );
     }
 

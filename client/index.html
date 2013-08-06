@@ -6,7 +6,12 @@
 
   <!-- Templates -->
   <script type="text/template" id="track-template">
-    <div> <%= artist %> - <%= title %> </div>
+    <div>
+      <h2> <%= artist %> - <%= title %> </h2>
+      <ul>
+        <% _.each(tags, function(tag) { %> <li>#<%= tag %></li> <% }); %>
+      </ul>
+    </div>
   </script>
 
   <script src="js/lib/underscore-min.js"></script>
