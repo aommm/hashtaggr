@@ -32,6 +32,7 @@ app.post('/tracks', function(req, res) {
     ;
 
   db.tracks.get({ artist: artist, title: title }, function(err, track) {
+    console.log('Track', track);
     res.json(track);
   });
 });

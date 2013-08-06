@@ -1,0 +1,11 @@
+#current-track {
+  list-style-type: none;
+}
+#current-track ul {
+  list-style-type: none;
+  /*display: inline;*/
+  /*display: none;*/
+}
+#current-track ul li {
+  display: inline;
+}

@@ -18,8 +18,11 @@
     },
 
     addOne: function( track ) {
-      var view = new app.TrackView({ model: track });
-      $('#track-list').append( view.render().el );
+      var listItemView = new app.TrackView({ model: track });
+      var currentTrackView = new app.CurrentTrackView({ model: track });
+
+      $('#track-list').append( listItemView.render().el );
+      $('#current-track').html( currentTrackView.render().el );
     }
 
   });

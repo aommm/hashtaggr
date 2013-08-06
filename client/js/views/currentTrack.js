@@ -1,10 +1,10 @@
 var app = app || {};
 
-app.TrackView = Backbone.View.extend({
+app.CurrentTrackView = Backbone.View.extend({
 
-  tagName: 'li',
+  tagName: 'div',
 
-  template: _.template( $('#track-template').html() ),
+  template: _.template( $('#current-track-template').html() ),
 
   events: {
   },
