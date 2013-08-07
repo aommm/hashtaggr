@@ -23,6 +23,8 @@ function getTrackLyrics(track, cb) {
         , lyrics = ''
         ;
 
+      console.log('Res json', resJSON);
+
       if ( !Array.isArray(body) ) {
         lyrics = body.lyrics.lyrics_body;
       }

@@ -29,23 +29,11 @@ app.get('/tracks/:id?', function(req, res) {
 app.post('/tracks', function(req, res) {
   var artist = req.body.artist
     , title = req.body.title
-    , trackObj = { artist: artist, title: title }
+    , track = { artist: artist, title: title }
     ;
 
-  db.tracks.get(trackObj, function(err, track) {
-    if (err) {
-      res.json(trackObj);
-    }
-
-    // res.json(track);
-    console.log('Track', track);
-    db.tracks.getRelated(track.id, function(err, tracks) {
-      if (err) {
-        res.json(track);
-      }
-      track.related = tracks;
-      res.json(track);
-    });
+  db.tracks.get(track, function(err, track) {
+    res.json(track);
   });
 });
 

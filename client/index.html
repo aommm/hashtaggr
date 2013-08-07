@@ -18,19 +18,7 @@
       <ul id="tags-for-track">
         <% _.each(tags, function(tag) { %> <li class="tag">#<%= tag %></li> <% }); %>
       </ul>
-      
-      <h2>Related tracks</h2>
-      <ul id="related-for-track">
-        <% _.each(related, function(track) { %> 
-          <li><%= track.title %></li>   
-          <ul>
-          <% _.each(track.tags, function(tag) { %> 
-            <li><%= tag %></li> 
-          <% }); %>
-          </ul>
-      <% }); %>
-      </ul>
-  </script>
+      </script>
 
   <script src="js/lib/underscore-min.js"></script>
   <script src="js/lib/jquery.min.js"></script>
