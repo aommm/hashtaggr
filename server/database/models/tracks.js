@@ -160,7 +160,7 @@ module.exports = function(connection) {
     });
     inTags = '(' + inTagsArr.join(',') + ')';
 
-    var selectRelatedTags = 'SELECT DISTINCT track_id FROM tags WHERE name IN ' + inTags + ' AND track_id != ' + removeTrackId + ';';
+    var selectRelatedTags = 'SELECT DISTINCT track_id FROM tags WHERE name IN ' + inTags + ' AND track_id != ' + removeTrackId + ' LIMIT 3;';
     connection.query(selectRelatedTags, function(err, trackIds) {
       // not we should track ids which has related tags (contains any of our tags, but we filter out our tags)
       if (err) {
