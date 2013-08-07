@@ -52,11 +52,18 @@ app.get('/song/:artist/:title', function(req, res) {
     , track = { artist: artist, title: songname }
     ;
 
-  console.log('Curl!!');
   lyricsRequester.getHashTags(track, function(err, tags) {
     console.log('Tags', tags);
   });
+});
 
+app.get('/getRelated/:trackId', function(req, res) {
+  var trackId = req.params.trackId
+    ;
+
+  db.tracks.getRelated(trackId, function(err, tracks) {
+    console.log('Got related', arguments);
+  });
 });
 
 app.get('/blabla', function(req, res) {

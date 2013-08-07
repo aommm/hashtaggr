@@ -49,7 +49,6 @@ module.exports = function(connection) {
     var selectTagsSql = 'SELECT * FROM tags WHERE track_id=' + id;
 
     connection.query(selectTagsSql, function(err, rows) {
-      console.log('Arguments', arguments);
 
       if ( err || !rows.length ) {
         cb(null, []);
@@ -127,8 +126,112 @@ module.exports = function(connection) {
     });
   }
 
+  function getRelated(trackId, cb) {
+    // get the tags of the trackID (fetch from db)
+    async.waterfall([
+      function(callback) {
+        getTagsForTrack(trackId, callback);
+      },
+
+      function(tags, callback) {
+        getRelatedTrackIds(trackId, tags, callback);
+      },
+
+      function(trackIds, callback) {
+        getFullData(trackIds, callback);
+      }
+    ], function(err, relatedTracks) {
+      if (err) {
+        cb(err);
+        return;
+      }
+
+      cb(null, relatedTracks);
+    });
+
+  }
+
+  function getRelatedTrackIds(removeTrackId, tags, callback) {
+    var inTagsArr = []
+      , inTags
+    ;
+    tags.forEach(function(tag) {
+      inTagsArr.push('\'' + tag + '\''); 
+    });
+    inTags = '(' + inTagsArr.join(',') + ')';
+
+    var selectRelatedTags = 'SELECT DISTINCT track_id FROM tags WHERE name IN ' + inTags + ' AND track_id != ' + removeTrackId + ';';
+    connection.query(selectRelatedTags, function(err, trackIds) {
+      // not we should track ids which has related tags (contains any of our tags, but we filter out our tags)
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      callback( null, _.pluck(trackIds, 'track_id') );
+    });
+  }
+
+  function getFullData(trackIds, callback) {
+    var fullTracks = []
+      , selectTracks = ''
+      , selectTrack = 'SELECT * FROM tracks WHERE id='
+      ;
+
+    // first build a sql string for retriving all the tracks with their data
+    trackIds.forEach( function(trackId) {
+      selectTracks += (selectTrack + trackId + ';');
+    });
+
+    connection.query(selectTracks, function(err, tracks) {
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      // when we've fetched that data - build a string which selects all the tags for those
+      var selectTags = ''
+        , selectTag = 'SELECT * FROM tags WHERE track_id='
+        ;
+
+      tracks.forEach( function(track) {
+        selectTags += ( selectTag + track[0].id + ';' );
+      });
+
+      // get all the tags for all these songs, then append them to the correct one
+      connection.query(selectTags, function(err, tagsForTracks) {
+        if (err) {
+          console.log('Err', err);
+          callback(err);
+          return;
+        }
+
+        tagsForTracks.forEach( function(tagsForTrack) {
+          if ( !tagsForTracks.length ) return;
+          // get the id, pluck the names
+
+          var tagsForTrackArr = _.pluck(tagsForTrack, 'name')
+            , tagsForTrackId = tagsForTrack[0].track_id
+            ;
+
+          tracks.forEach( function(track) {
+            var track = track[0];
+            if (track.id === tagsForTrackId) {
+              track.tags = tagsForTrackArr;
+              fullTracks.push(track);
+            }
+          });
+        });
+
+        callback(err, fullTracks);
+      });
+    });
+
+  }
+
   return {
-    get: get
+    get: get,
+    getRelated: getRelated
   };
 
 };
